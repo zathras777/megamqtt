@@ -1,0 +1,24 @@
+# Sample configuration file
+megaio:
+  pin: 4  # this is the usual pin and shouldn't need to be changed
+
+mqtt:
+  host: "127.0.0.1"
+  port: 1883
+  topic: "megamqtt"
+
+switches:
+  -
+    pin: 1
+    board: 0
+    name: "Switch 1"
+  -
+    pin: 2
+    board: 0
+    name: "Switch 2"
+
+lights:
+  -
+    relay: 2
+    board: 0
+    name: First Light
