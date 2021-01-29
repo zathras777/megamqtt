@@ -26,7 +26,7 @@ var connectCb mqtt.OnConnectHandler = func(c mqtt.Client) {
 		log.Printf("Unable to subscribe to required topics: %s", token.Error())
 		doneChannel <- true
 	}
-	log.Print("MQTT reconnected")
+	log.Print("MQTT connected and subscribed OK")
 }
 
 var publishCb mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
@@ -36,6 +36,5 @@ var publishCb mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 		log.Printf("Message received for unknown light, %s. Ignoring...", parts[2])
 		return
 	}
-	//	fmt.Printf("Received message: %s from topic: %s\n", msg.Payload(), msg.Topic())
 	cmdChannel <- command{lt, parts[3], string(msg.Payload())}
 }

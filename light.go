@@ -24,7 +24,7 @@ func newLight(name string, relay uint8, board *Board) (*light, error) {
 }
 
 func (lt *light) stateTopic() string {
-	return fmt.Sprintf("%s/switch/%s/state", myConfig.MQTT.Topic, lt.uid)
+	return fmt.Sprintf("%s/light/%s/state", myConfig.MQTT.Topic, lt.uid)
 }
 
 func (lt *light) commandTopic() string {
@@ -47,6 +47,7 @@ func (lt *light) process(cmd, val string) {
 		log.Printf("Unhandled command '%s' received. Ignoring...", cmd)
 		return
 	}
+log.Printf("Light: %s cmd -> %s, current state %s", lt.Name, val, lt.stateValue())
 	switch strings.ToLower(val) {
 	case "on":
 		lt.status = lt.board.setRelay(lt.Relay, true)

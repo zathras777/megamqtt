@@ -91,13 +91,14 @@ func main() {
 		}
 	}()
 	<-quitChannel
+        log.Print("Exiting...")
 }
 
 func publishState(client mqtt.Client, pub pubData) {
-	token := client.Publish(pub.topic, byte(0), true, pub.value)
+        token := client.Publish(pub.topic, byte(0), true, pub.value)
 	token.Wait()
 	if token.Error() != nil {
-		log.Printf("Unable to publish message '%s' to topic '%s'", pub.value, pub.topic)
+		log.Printf("Unable to publish message '%s' to topic '%s': %s", pub.value, pub.topic, token.Error())
 	}
 }
 
@@ -110,13 +111,6 @@ func checkSwitches() {
 		}
 	}
 	//	showSwitches()
-}
-
-func showSwitches() {
-	fmt.Println("Switches:")
-	for id, sw := range switches {
-		fmt.Printf("  %-30s  %-30s   %d     %t\n", id, sw.Name, sw.Pin, sw.status)
-	}
 }
 
 func dumpYamlData() {
